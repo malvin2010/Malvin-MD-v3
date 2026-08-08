@@ -204,9 +204,11 @@ async function pairNumber(number, socketId) {
       if (err?.message) console.log(`   Baileys error: ${err.message}`);
 
       if (statusCode === DisconnectReason.loggedOut) {
-        console.log(`   Number was logged out — deleting stale session so a fresh pairing code can be requested.`);
+        console.log(`   Number was logged out — deleting stale session and requesting a fresh pairing code.`);
         fs.rmSync(path.join(SESSIONS_DIR, number), { recursive: true, force: true });
+        lastCodeIssuedAt.delete(number);
         io.emit('stats-update', publicStats());
+        setTimeout(() => pairNumber(number, socketId).catch((e) => console.error(`Re-pair failed for ${number}:`, e.message)), 2000);
         return;
       }
 
