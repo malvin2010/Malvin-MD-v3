@@ -1,3 +1,16 @@
+// Global safety net — without this, an unexpected error anywhere (a bad
+// require, an unhandled promise) can kill the process with little or no
+// trace in a host's log viewer. Register these FIRST, before anything else
+// has a chance to throw.
+process.on('uncaughtException', (err) => {
+  console.error('\n💥 UNCAUGHT EXCEPTION — the process would otherwise die silently here:');
+  console.error(err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('\n💥 UNHANDLED PROMISE REJECTION — the process would otherwise die silently here:');
+  console.error(reason);
+});
+
 const express = require('express');
 const http = require('http');
 const path = require('path');
@@ -16,6 +29,7 @@ const { Boom } = require('@hapi/boom');
 const pino = require('pino');
 
 const config = require('./config');
+console.log('🚀 Booting Malvin MD server.js...');
 const db = require('./lib/database');
 const { serialize } = require('./lib/serialize');
 const { handleMessage, loadCommands } = require('./lib/commandHandler');
