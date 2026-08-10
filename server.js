@@ -24,7 +24,7 @@ const {
   DisconnectReason,
   makeCacheableSignalKeyStore,
   Browsers,
-} = require('@whiskeysockets/baileys');
+} = require('@trashcore/baileys');
 const { Boom } = require('@hapi/boom');
 const pino = require('pino');
 
