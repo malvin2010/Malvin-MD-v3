@@ -14,7 +14,7 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.9",
+    "@trashcore/baileys": "^4.2.1",
     "@hapi/boom": "^10.0.1",
     "axios": "^1.7.7",
     "chalk": "^4.1.2",
